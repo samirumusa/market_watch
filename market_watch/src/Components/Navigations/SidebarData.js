@@ -11,25 +11,25 @@ export const SidebarData=[
             icon: <MdIcons.MdOutlineSpaceDashboard/>
         },
         {
-            title:'Fundamentals',
+            title:'United States',
             path:"/fundamentals",
             cName:"nav-text",
             icon: <FaIcons.FaNewspaper/>
         },
         {
-            title:'Technicals',
+            title:'Canada',
             path:"/technicals",
             cName:"nav-text",
             icon: <FaIcons.FaChartPie/>
         },
         {
-            title:'Charts',
+            title:'Japan',
             path:"/charts",
             cName:"nav-text",
             icon: <MdIcons.MdWaterfallChart/>
         },
         {
-            title:'News',
+            title:'Australia',
             path:"/news",
             cName:"nav-text",
             icon: <BsIcons.BsNewspaper/>

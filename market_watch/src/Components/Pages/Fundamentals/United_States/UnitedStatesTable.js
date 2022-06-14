@@ -42,7 +42,7 @@ const rows = [
 ];
 
 export default function UnitedStatesTable() {
-  const [usaData, setusaData] = useState({});
+  const [usaData, setusaData] = useState([]);
   const [retailSales, setretailSales] = useState([]);
   
   
@@ -50,34 +50,21 @@ export default function UnitedStatesTable() {
    
     axios.get('http://localhost:5000/united_states/')
       .then(response => {
-
-        console.log(response.data.map( (dt) =>{
-             
-          return dt[0][0]
-
-        }))
-        //setusaData(JSON.parse(response))
-          /* response.data.map((dt) => {
-
-            console.log(JSON.parse(response.data))
-
-          }) */
-         //console.log(response.data.USA_retail_sales)
+        setusaData(response.data)
+        console.log(response.data)
       })
       .catch((error) => {
         console.log(error);
       })
       setretailSales(usaData,'USA_retail_sales')
-      //console.log(retailSales)
-
-    
-  }, []);
+      //console.log(retailSales)    
+  }, [usaData]);
   
-  function setDataUnit(data,name){
+  /* function makeRow(data){
 
-    return JSON.parse(data[name])
+    return JSON.parse(data])
   
-  }
+  } */
   
   return (
     <TableContainer component={Paper}>
@@ -92,15 +79,18 @@ export default function UnitedStatesTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+      
+          {usaData.map((row) => (
+            
+            <StyledTableRow key={row[0][0]}>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                {row[0][0]}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+              
+              <StyledTableCell align="right"></StyledTableCell>
+              <StyledTableCell align="right">{row[0][0]}</StyledTableCell>
+              <StyledTableCell align="right">{row[0][0]}</StyledTableCell>
+              <StyledTableCell align="right">{row[0][0]}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

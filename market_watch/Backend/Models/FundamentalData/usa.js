@@ -3,35 +3,36 @@ const client = redis.createClient();
 const axios = require('axios');
 const router = require('express').Router();
 
+
 const retail_sales =axios.get('https://www.econdb.com/api/series/RETAUS/?format=json');
 const core_retail_sales =axios.get('https://www.econdb.com/api/series/URATEUS/?format=json');
-const umichigan_consumer_sentiment=axios.get( 'https://www.econdb.com/api/series/URATEUS/?format=json');
-const cbconsumer_confidence= axios.get('https://www.econdb.com/api/series/URATEUS/?format=json');
+
+
+const umichigan_consumer_sentiment = axios.get( 'https://www.econdb.com/api/series/URATEUS/?format=json');
+const cbconsumer_confidence = axios.get('https://www.econdb.com/api/series/URATEUS/?format=json');
 const ussentiment_imf = axios.get('https://www.econdb.com/api/series/SENTUS/?format=json');
-const real_gdp =axios.get('https://www.econdb.com/api/series/RGDPUS/?format=json');
-const gdp =axios.get('https://www.econdb.com/api/series/GDPUS/?format=json');
-const cpi =axios.get('https://www.econdb.com/api/series/CPIUS/?format=json');
-const total_employment =axios.get('https://www.econdb.com/api/series/EMPUS/?format=json');
+const real_gdp = axios.get('https://www.econdb.com/api/series/RGDPUS/?format=json');
+const gdp = axios.get('https://www.econdb.com/api/series/GDPUS/?format=json');
+
+
+const cpi = axios.get('https://www.econdb.com/api/series/CPIUS/?format=json');
+const total_employment = axios.get('https://www.econdb.com/api/series/EMPUS/?format=json');
 const active_population = axios.get('https://www.econdb.com/api/series/ACPOPUS/?format=json');
 const employment_population_ratio = axios.get('https://www.econdb.com/api/series/EMRATIOUS/?format=json');
 const unemployment = axios.get('https://www.econdb.com/api/series/URATEUS/?format=json');
+
+
 const industrial_production = axios.get('https://www.econdb.com/api/series/IPUS/?format=json');
 const government_blance = axios.get('https://www.econdb.com/api/series/GBALUS/?format=json');
-const government_revenue =axios.get('https://www.econdb.com/api/series/GREVUS/?format=json');
-const government_expenditure =axios.get( 'https://www.econdb.com/api/series/GSPEUS/?format=json');
+const government_revenue = axios.get('https://www.econdb.com/api/series/GREVUS/?format=json');
+const government_expenditure = axios.get( 'https://www.econdb.com/api/series/GSPEUS/?format=json');
 const Treasury_3_month = axios.get('https://www.econdb.com/api/series/M3YDUS/?format=json');
 
 
-
-
-  //await client.connect().then
-  
-
-    
-
-    try{
+//await client.connect().then 
+ try{
         router.route('/').get((req, res) => {
-            client.get('USA_cpi', (data, err)=>{
+            client.get('united_states', (data, err)=>{
 
                 if (err) {
                     console.error(err);
@@ -48,15 +49,14 @@ const Treasury_3_month = axios.get('https://www.econdb.com/api/series/M3YDUS/?fo
             //console.log(output)
       
         }else{
-
             axios.all([retail_sales, core_retail_sales, umichigan_consumer_sentiment,
                 cbconsumer_confidence,ussentiment_imf,real_gdp, gdp, cpi,
                 total_employment, active_population,employment_population_ratio,
                 unemployment,industrial_production,government_revenue,government_blance,
-                government_expenditure,Treasury_3_month
-                ])
+                government_expenditure,Treasury_3_month ])
    .then(
      axios.spread((...responses) => {
+       
        const retail = responses[0];
        const c_retail_sales = responses[1];
        const michigan_sentiment = responses[2];
@@ -74,7 +74,6 @@ const Treasury_3_month = axios.get('https://www.econdb.com/api/series/M3YDUS/?fo
        const gov_bal = responses[14];
        const gov_exp = responses[15];
        const three_month_ts= responses[16];
- 
        //client.connect()
        const rt_sales = getCurAndPre(retail)
        const c_rt_sales = getCurAndPre(c_retail_sales)
@@ -93,6 +92,7 @@ const Treasury_3_month = axios.get('https://www.econdb.com/api/series/M3YDUS/?fo
        const govtBalance = getCurAndPre(gov_bal)
        const govtExpenditure = getCurAndPre(gov_exp)
        const threeMonthTreasury = getCurAndPre(three_month_ts)
+
  /* 
         client.setex('USA_retail_sales', 3600, JSON.stringify(rt_sales))
         client.setex('USA_core_retail_sales', 3600, JSON.stringify(c_rt_sales))
@@ -111,8 +111,7 @@ const Treasury_3_month = axios.get('https://www.econdb.com/api/series/M3YDUS/?fo
         client.setex('USA_govtBalance', 3600, JSON.stringify(govtBalance))
         client.setex('USA_govtExpenditure', 3600, JSON.stringify(govtExpenditure))
         client.setex('USA_threeMonthTreasury', 3600, JSON.stringify(threeMonthTreasury)) */
-       //client.get('USA_retail_sales')
-       
+       //client.get('USA_retail_sales')       
        // use/access the results
 
       const rData = [[['USA_retail_sales'],[JSON.stringify(rt_sales)]],

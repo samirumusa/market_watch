@@ -20,6 +20,7 @@
     transition: 850ms;
     z-index:20;
     overflow: hidden;
+
 }
 .menu-list.active{
     left:0px;
@@ -48,6 +49,7 @@
 
     
 }
+
 .nav-text{
     display: flex;
     align-items: center;
@@ -57,6 +59,7 @@
     height: 60px;
     width: 90%;
 }
+
 .nav-text a{
     display: flex;
     align-items: center;
@@ -72,6 +75,7 @@
 .nav-text a:hover{
     background-color: rgb(23, 23, 90);
 }
+
 span{
     margin-left: 5px;
 }
